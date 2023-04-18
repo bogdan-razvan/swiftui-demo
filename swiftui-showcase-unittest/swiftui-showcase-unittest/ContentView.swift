@@ -1,27 +1,30 @@
 //
 //  ContentView.swift
+//  swiftui-showcase-unittest
 //
-//  Created by bogdan razvan on 10.04.2023.
+//  Created by bogdan razvan on 18.04.2023.
 //
 
 import SwiftUI
 
 struct ContentView: View {
 
-    @State private var username = ""
-    @State private var password = ""
+    @ObservedObject var viewModel = ViewModel()
 
     var body: some View {
         VStack(spacing: 20) {
-            TextField("Username", text: $username)
-            TextField("Password", text: $password)
+            TextField("Username", text: $viewModel.username)
+                .accessibilityIdentifier("usernameTextField")
+            TextField("Password", text: $viewModel.password)
+                .accessibilityIdentifier("passwordTextField")
             Button(action: { }) {
                 Text("Submit")
                     .frame(maxWidth: .infinity)
             }
-            .disabled(username.isEmpty || password.isEmpty)
+            .disabled(viewModel.isButtonDisabled)
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
+            .accessibilityIdentifier("submitButton")
         }
         .padding(40)
     }
